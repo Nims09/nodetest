@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <% include(head) %>
+    <%- include(head); %> 
 </head>
-
 <body class="container">
 	<header>
+	    <%- include(header); %> 
 	</header>
 
 	<main>
@@ -14,22 +14,24 @@
 				<tr>
 					<th> Rank </th>
 					<th> Album </th>
+					<th> Plays </th>
 				</tr>
 			</thead>
 			<tbody>
-			  <% albums.forEach(function(album, count){ %>
-			  	<tr>
-			  		<td><%= count %></td>
-			    	<td><%= album.album_name %></td>
-			    </tr>
-			  <% }) %>
+				<% albums.forEach(function(album, count){ %>
+				  	<tr>
+				  		<td><%= (count+1) %></td>
+				    	<td><%= album.album_name %></td>
+				    	<td><%= album.play_counts%></td>
+				    </tr>
+				<% }) %>
 			</tbody>
 		</table>
 	</main>
 
 	<footer>
+	    <%- include(footer); %> 		
 	</footer>
-
 </body>
 </html>
 

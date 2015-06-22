@@ -3,8 +3,8 @@ db = require('./db')
 http = require('http')
 fs = require('fs')
 ejs = require('ejs')
-# bs = require('bootstrap')
 
+# Retrieves top 20 releases
 db.albums.find({}, {}, 
 	(err, data) ->
 		if err?
@@ -15,31 +15,29 @@ db.albums.find({}, {},
 			return
 	).sort({'play_counts': -1}).limit(20)
 
+# Server waits for a call to send assests back to the client
 initiate_server = (albums) ->
 	http.createServer(
 		(req, res) ->
 			res.writeHead(200, {'Content-Type': 'text/html'})
-			# res.end(String(data))
 			
-			fs.readFile('views/index.ejs', 'utf-8',
-				(err, data) ->
+			headpath =  'head.ejs'
+
+			ejs.renderFile( __dirname + '/views/index.ejs',
+				{
+					albums: albums,
+					headerText: 'TempText',
+					head: 'partials/' + 'head.ejs',
+					header: 'partials/' + 'header.ejs',
+					footer: 'partials/' + 'footer.ejs'
+				},
+				(err, data) ->					
 					if err?
-						res.end('error occured')
-					else
-						dir_path = __dirname + '/views'
+						res.end(err.toString())
+						console.log(err)
+					else	
+						res.end(data)	
 
-						renderedHtml = ejs.render(data, 
-								{
-									albums: albums,
-									headerText: 'TempText',
-									head: dir_path + '/partials/head.ejs',
-									header: dir_path + '/partials/header.ejs',
-									footer: dir_path + '/partials/footer.ejs'
-								}
-							)
-						res.end(renderedHtml)
-
-						# res.end(data)
 			)
 			return
 	).listen(8080)
