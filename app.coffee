@@ -1,8 +1,9 @@
 db = require('./db')
-http = require('http')
 
+http = require('http')
 fs = require('fs')
 ejs = require('ejs')
+# bs = require('bootstrap')
 
 db.albums.find({}, {}, 
 	(err, data) ->
@@ -20,13 +21,22 @@ initiate_server = (albums) ->
 			res.writeHead(200, {'Content-Type': 'text/html'})
 			# res.end(String(data))
 			
-			fs.readFile('index.html', 'utf-8',
+			fs.readFile('views/index.ejs', 'utf-8',
 				(err, data) ->
 					if err?
 						res.end('error occured')
 					else
-						temp = 'some text' #For testing
-						renderedHtml = ejs.render(data, {temp: albums})
+						dir_path = __dirname + '/views'
+
+						renderedHtml = ejs.render(data, 
+								{
+									albums: albums,
+									headerText: 'TempText',
+									head: dir_path + '/partials/head.ejs',
+									header: dir_path + '/partials/header.ejs',
+									footer: dir_path + '/partials/footer.ejs'
+								}
+							)
 						res.end(renderedHtml)
 
 						# res.end(data)

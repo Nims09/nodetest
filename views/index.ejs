@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include(head) %>
+</head>
+
+<body class="container">
+	<header>
+	</header>
+
+	<main>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th> Rank </th>
+					<th> Album </th>
+				</tr>
+			</thead>
+			<tbody>
+			  <% albums.forEach(function(album, count){ %>
+			  	<tr>
+			  		<td><%= count %></td>
+			    	<td><%= album.album_name %></td>
+			    </tr>
+			  <% }) %>
+			</tbody>
+		</table>
+	</main>
+
+	<footer>
+	</footer>
+
+</body>
+</html>
+
+
+
+
