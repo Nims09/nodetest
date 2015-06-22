@@ -21,8 +21,6 @@ initiate_server = (albums) ->
 		(req, res) ->
 			res.writeHead(200, {'Content-Type': 'text/html'})
 			
-			headpath =  'head.ejs'
-
 			ejs.renderFile( __dirname + '/views/index.ejs',
 				{
 					albums: albums,
